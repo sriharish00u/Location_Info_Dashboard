@@ -128,25 +128,21 @@ def get_news():
     query = request.args.get('location')
     api_key = os.getenv('NEWS_API_KEY')
 
-    # Extract country code from location query if possible
-    country_code = None
-    try:
-        # Try to find country in the query
-        for country in pycountry.countries:
-            if country.name.lower() in query.lower():
-                country_code = country.alpha_2.lower()
-                break
-    except:
-        pass
+    if not api_key:
+        return jsonify({'error': 'News API key not configured'}), 500
 
-    # Build URL with regional news if country found
-    if country_code:
-        url = f"https://newsapi.org/v2/top-headlines?country={country_code}&apiKey={api_key}&pageSize=10"
-    else:
-        url = f"https://newsapi.org/v2/everything?q={query}&apiKey={api_key}&pageSize=10"
+    # Use the location name directly for regional news search
+    url = f"https://newsapi.org/v2/everything?q={query}&apiKey={api_key}&pageSize=10"
 
     response = requests.get(url)
-    return jsonify(response.json())
+    if response.status_code != 200:
+        return jsonify({'error': f'News API request failed with status {response.status_code}'}), 500
+
+    data = response.json()
+    if data.get('status') != 'ok':
+        return jsonify({'error': data.get('message', 'News API error')}), 400
+
+    return jsonify(data)
 
 @app.route('/favorites', methods=['GET', 'POST'])
 @jwt_required()
