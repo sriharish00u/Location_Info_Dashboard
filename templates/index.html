@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Info Dashboard</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">
+            <i class="bi bi-geo-alt-fill me-2"></i>
+            Location Information Dashboard
+        </h1>
+
+        <!-- Authentication Category -->
+        <div class="category-header">
+            <i class="bi bi-shield-lock"></i>
+            Authentication
+        </div>
+
+        <!-- Authentication Section -->
+        <div id="auth-section" class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    Login
+                </h5>
+                <form id="login-form">
+                    <div class="mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="button" class="btn btn-link" onclick="showRegister()">Register</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Registration Section -->
+        <div id="register-section" class="card" style="display: none;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-person-plus me-2"></i>
+                    Register
+                </h5>
+                <form id="register-form">
+                    <div class="mb-3">
+                        <input type="email" class="form-control" id="register-email" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="register-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="button" class="btn btn-link" onclick="showLogin()">Back to Login</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Location & Search Category -->
+        <div id="location-category" class="category-header" style="display: none;">
+            <i class="bi bi-search"></i>
+            Location & Search
+        </div>
+
+        <!-- Location Search -->
+        <div id="search-section" class="card" style="display: none;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-geo-alt me-2"></i>
+                    Search Location
+                </h5>
+                <input type="text" class="form-control" id="location-input" placeholder="Enter city, address, or coordinates">
+                <button class="btn btn-primary mt-2" onclick="searchLocation()">Search</button>
+                <button class="btn btn-secondary mt-2" onclick="getCurrentLocation()">
+                    <i class="bi bi-geo me-1"></i>
+                    Use My Location
+                </button>
+            </div>
+        </div>
+
+        <!-- Favorites -->
+        <div id="favorites-section" class="card" style="display: none;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-heart me-2"></i>
+                    Favorite Locations
+                </h5>
+                <div id="favorites-list"></div>
+                <button class="btn btn-success" onclick="addFavorite()">
+                    <i class="bi bi-plus-circle me-1"></i>
+                    Add Current Location to Favorites
+                </button>
+            </div>
+        </div>
+
+        <!-- Weather & Climate Category -->
+        <div id="weather-category" class="category-header" style="display: none;">
+            <i class="bi bi-cloud-sun"></i>
+            Weather & Climate
+        </div>
+
+        <!-- Weather Display -->
+        <div id="weather-section" class="card" style="display: none;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-thermometer-half me-2"></i>
+                    Current Weather
+                </h5>
+                <div id="weather-data"></div>
+            </div>
+        </div>
+
+        <!-- Forecast -->
+        <div id="forecast-section" class="card" style="display: none;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-calendar3 me-2"></i>
+                    5-Day Forecast
+                </h5>
+                <div id="forecast-data"></div>
+            </div>
+        </div>
+
+        <!-- Air Quality -->
+        <div id="air-quality-section" class="card" style="display: none;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-wind me-2"></i>
+                    Air Quality Index
+                </h5>
+                <div id="air-quality-data"></div>
+            </div>
+        </div>
+
+        <!-- Information Category -->
+        <div id="news-category" class="category-header" style="display: none;">
+            <i class="bi bi-newspaper"></i>
+            Regional Information
+        </div>
+
+        <!-- News -->
+        <div id="news-section" class="card" style="display: none;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-newspaper me-2"></i>
+                    Regional News
+                </h5>
+                <div id="news-data"></div>
+            </div>
+        </div>
+
+        <!-- Search History -->
+        <div id="history-section" class="card" style="display: none;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-clock-history me-2"></i>
+                    Search History
+                </h5>
+                <div id="history-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
